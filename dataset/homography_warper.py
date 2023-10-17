@@ -9,16 +9,19 @@ pi = torch.tensor(3.14159265358979323846)
 
 def deg2rad(tensor: torch.Tensor) -> torch.Tensor:
     r"""Function that converts angles from degrees to radians.
-    Args:
+    Args:角度——弧度
         tensor (torch.Tensor): Tensor of arbitrary shape.
     Returns:
         torch.Tensor: tensor with same shape as input.
     """
     if not isinstance(tensor, torch.Tensor):
+         # 如果输入不是 torch.Tensor 类型，抛出类型错误
         raise TypeError("Input type is not a torch.Tensor. Got {}".format(
             type(tensor)))
 
     return tensor * pi.to(tensor.device).type(tensor.dtype) / 180.
+    # 将张量中的每个元素（以角度为单位）转换为对应的弧度值，
+    # 并返回结果张量。计算公式是：弧度 = 度 * π / 180
 
 
 def angle_to_rotation_matrix(angle: torch.Tensor) -> torch.Tensor:
@@ -32,6 +35,19 @@ def angle_to_rotation_matrix(angle: torch.Tensor) -> torch.Tensor:
         - Input: :math:`(*)`
         - Output: :math:`(*, 2, 2)`
     Example:
+        >>> input = torch.rand(1, 3)  # Nx3
+        >>> output = kornia.angle_to_rotation_matrix(input)  # Nx3x2x2
+    """
+    """
+    从角度（以度为单位）创建旋转矩阵
+    参数：
+        angle (torch.Tensor): 任意形状的张量，其中包含以度为单位的角度。
+    返回值：
+        torch.Tensor: 张量的* x2x2旋转矩阵。
+    形状：
+        - 输入： :math:`(*)`
+        - 输出： :math:`(*, 2, 2)`
+    示例：
         >>> input = torch.rand(1, 3)  # Nx3
         >>> output = kornia.angle_to_rotation_matrix(input)  # Nx3x2x2
     """
